@@ -9,7 +9,18 @@ import SwiftUI
 
 struct LoadingAnImageFromARemoteServer: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        AsyncImage(url: URL(string: "https://hws.dev/img/logo.png")) { phase in
+            if let image = phase.image {
+                image
+                    .resizable()
+                    .scaledToFit()
+            } else if phase.error != nil {
+                Text("There was an error loading the image.")
+            } else {
+                ProgressView()
+            }
+        }
+        .frame(width: 200, height: 200)
     }
 }
 
